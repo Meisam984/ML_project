@@ -1,7 +1,7 @@
 import sys
 
-
-def error_message_detail(err_message, err_detail:sys):
+# Error message format function
+def error_message_detail(err_message, err_detail: sys):
 	_, _, exc_tb = err_detail.exc_info()
 	file_name = exc_tb.tb_frame.f_code.co_filename
 
