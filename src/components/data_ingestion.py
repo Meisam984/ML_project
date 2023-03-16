@@ -47,4 +47,3 @@ class DataIngestion:
             # Custom exception raised
             raise CustomException(err, sys)
         
-            
