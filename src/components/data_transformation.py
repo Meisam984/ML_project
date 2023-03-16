@@ -109,12 +109,5 @@ class DataTransformation:
         except Exception as err:
             raise CustomException(err, sys)
                
-            
-if __name__ == "__main__":
-    obj = DataIngestion()
-    train_path, test_path = obj.initiate_data_ingestion()
-
-    data_transformation = DataTransformation()
-    data_transformation.initiate_data_transformation(train_path, test_path)
 
 
