@@ -70,7 +70,7 @@ class ModelTrainer:
                 file_path=ModelTrainerConfig.trained_model_file_path,
                 obj=best_model
             )
-            logging.info(f"Best model, with the score of {best_model:.2%} saved into 'artifacts\model.pkl'")
+            logging.info(f"Best model is selected to be {best_model}, with the score of {best_model_score:.2%} saved into 'artifacts\model.pkl'")
             
 
         except Exception as err:
