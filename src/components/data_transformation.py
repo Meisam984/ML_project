@@ -11,7 +11,6 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from src.exception_handler import CustomException
 from src.logger import logging
-from src.components.data_ingestion import DataIngestion
 from src.utils import save_object
 
 @dataclass
@@ -94,12 +93,11 @@ class DataTransformation:
                 features_test_arr, np.array(label_test_df)
             ]
 
-            logging.info("Saving preprocessor object into a pickle file")
-
             save_object(
                 file_path=self.data_transformation_config.preprocessor_obj_path,
                 obj=preprocessor_obj
             )
+            logging.info("Preprocessor object saved into 'artifacts/preprocessor.pkl'")
                 
             return(
                 train_arr,
