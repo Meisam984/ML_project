@@ -49,10 +49,49 @@ class ModelTrainer:
                 'K-Neighbors Regression': KNeighborsRegressor(),
                 'XGB Regression': XGBRegressor(),
                 'CatBoosting Regression': CatBoostRegressor(verbose=False),
-                'AdaBoos Regression': AdaBoostRegressor()
+                'AdaBoost Regression': AdaBoostRegressor()
             }
 
-            model_report = evaluate_models(X_train, y_train, X_test, y_test, models)
+            params = {
+                "Random Forest": {
+                    # 'criterion':['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
+
+                    # 'max_features':['sqrt','log2',None],
+                    'n_estimators': [8, 16, 32, 64, 128, 256]
+                },
+                "Decision Tree": {
+                    'criterion': ['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
+                    # 'splitter':['best','random'],
+                    # 'max_features':['sqrt','log2'],
+                },
+                "Gradient Boosting": {
+                    # 'loss':['squared_error', 'huber', 'absolute_error', 'quantile'],
+                    'learning_rate': [.1, .01, .05, .001],
+                    'subsample': [0.6, 0.7, 0.75, 0.8, 0.85, 0.9],
+                    # 'criterion':['squared_error', 'friedman_mse'],
+                    # 'max_features':['auto','sqrt','log2'],
+                    'n_estimators': [8, 16, 32, 64, 128, 256]
+                },
+                "Linear Regression": {},
+                "K-Neighbors Regression": {},
+                "XGB Regression": {
+                    'learning_rate': [.1, .01, .05, .001],
+                    'n_estimators': [8, 16, 32, 64, 128, 256]
+                },
+                "CatBoosting Regression": {
+                    'depth': [6, 8, 10],
+                    'learning_rate': [0.01, 0.05, 0.1],
+                    'iterations': [30, 50, 100]
+                },
+                "AdaBoost Regression": {
+                    'learning_rate': [.1, .01, 0.5, .001],
+                    # 'loss':['linear','square','exponential'],
+                    'n_estimators': [8, 16, 32, 64, 128, 256]
+                }
+
+            }
+
+            model_report = evaluate_models(X_train, y_train, X_test, y_test, models, params)
             logging.info("Models scores calculated and returned in a dictionary")
             key_list = list(model_report.keys())
             value_list = list(model_report.values())
@@ -60,7 +99,7 @@ class ModelTrainer:
             best_model_score = max(sorted(value_list))
             position = value_list.index(best_model_score)
             best_model_name = key_list[position]
-            best_model = model_report[best_model_name]
+            best_model = models[best_model_name]
             logging.info("Best model score captured")
 
             if best_model_score <= 0.6:
@@ -70,12 +109,10 @@ class ModelTrainer:
                 file_path=ModelTrainerConfig.trained_model_file_path,
                 obj=best_model
             )
-            logging.info(f"Best model is selected to be {best_model}, with the score of {best_model_score:.2%} saved into 'artifacts\model.pkl'")
+            logging.info(f"Best model is selected to be {best_model_name}, with the score of {best_model_score:.2%} saved into 'artifacts\model.pkl'")
+
+            return best_model_score
             
 
         except Exception as err:
             raise CustomException(err, sys)
-        
-
-
-
