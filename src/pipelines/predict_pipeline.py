@@ -1,10 +1,12 @@
 import sys
 import os
 import pandas as pd
+from dataclasses import dataclass
 
 from src.exception_handler import CustomException
 from src.utils import load_object
 
+@dataclass
 class PredictPipelineConfig:
     model_path = os.path.join('artifacts', 'model.pkl')
     preprocessor_path = os.path.join('artifacts', 'preprocessor.pkl')
