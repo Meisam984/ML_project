@@ -10,10 +10,10 @@ from dataclasses import dataclass
 # Data ingestion config class
 @dataclass
 class DataIngestionConfig:
-    train_data_path:str = os.path.join('artifacts', 'train.csv')
-    test_data_path:str = os.path.join('artifacts', 'test.csv')
-    raw_data_path:str = os.path.join('artifacts', 'data.csv')
-    dataset_path:str = os.path.join('notebook', 'data', 'stud.csv')
+    train_data_path = os.path.join('artifacts', 'train.csv')
+    test_data_path = os.path.join('artifacts', 'test.csv')
+    raw_data_path = os.path.join('artifacts', 'data.csv')
+    dataset_path = os.path.join('notebook', 'data', 'stud.csv')
 
 # Data ingestion class
 class DataIngestion:
